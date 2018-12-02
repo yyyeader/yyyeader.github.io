@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[算法竞赛进阶指南学习记录]]></title>
+    <url>%2F2018%2F12%2F02%2F%E7%AE%97%E6%B3%95%E7%AB%9E%E8%B5%9B%E8%BF%9B%E9%98%B6%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[最近开始看lyd的蓝书了，看了目录之后，对之后的学习还挺期待的。一方面，我自己挺想看这本书的，另一方面，接了兼职要教初中生，所以这本书我肯定是要看完的。之前竞赛成绩一直不是很好，可能就是我学的不(ti)够(shua)系(de)统(shao)？现在开始看书说不定还来(lai)得(bu)及(ji)?唉，最后再努力挣扎一下。然后，就是在这里记录一下学习历程，和一点笔记。$f(x) = x$ $\lbrace \sum_{i=0}^{n}i^{2}=\frac{2a}{x^2+1} \rbrace$ $\frac ab$ $\frac{1}{2}$ ${a+1 \over b+1}$ $\sqrt[x+1]{x^2}$ $\int_{1}^{\infty}$ $\prod_{1}^{n}$ $\bigcup_{1}^{n}$ $\iint_{1}^{n}$ $\sum_i^n$ $\lbrace a+x \rbrace$ $\lceil \frac{x}{2} \rceil$ $\lfloor x \rfloor$ $O(log^n_2)$ $x^2$ $x_i$ 0x00 基本算法 0x01 位运算1.快速幂换个思路重新认识了一下快速幂,在求$a^b$时可以这么理解：$b=c_{k-1}2^{k-1} + c_{k-2}2^{k-2} + … + c_02^0 $于是$a^b=a^{c_{k-1}2^{k-1}} a^{c_{k-2}2^{k-2}} … * a^{c_02^0} $123456789// 快速幂，求a^b mod pint power(int a, int b, int p) &#123; int ans = 1; for (; b; b &gt;&gt;= 1) &#123; if (b &amp; 1) ans = (long long)ans * a % p; a = (long long)a * a % p; &#125; return ans;&#125; 2.快速乘首先，快速乘是为了解决大数相乘会溢出的问题而不是加速乘法。 方法一跟快速幂的思想差不多，当求$a b$ % $p$时$,(1 \leq a,b,p \geq 10^{18})$时：$b=c_{k-1}2^{k-1} + c_{k-2}2^{k-2} + … + c_02^0 $$a b=c_{k-1} a 2^{k-1} + c_{k-2} a 2^{k-2} + … + c_0 a 2^0 $123456789// 64位整数乘法的O(log b)算法long long mul(long long a, long long b, long long p) &#123; long long ans = 0; for (; b; b &gt;&gt;= 1) &#123; if (b &amp; 1) ans = (ans + a) % p; a = a * 2 % p; &#125; return ans;&#125; 方法二利用$ a b $ % $ p=a b - \lfloor a b / p \rfloor p $的原理：123456789// 64位整数乘法的long double算法long long mul(long long a, long long b, long long p) &#123; a %= p, b %= p; // 当a,b一定在0~p之间时，此行不必要。 long long c = (long double)a * b / p; long long ans = a * b - c * p; if (ans &lt; 0) ans += p; else if (ans &gt;= p) ans -= p; return ans;&#125;]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>ACM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[markdown使用实例]]></title>
     <url>%2F2018%2F12%2F01%2Fmarkdown%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B%2F</url>
     <content type="text"><![CDATA[LIGHTOJ 1003题面实例 input1 3 4 output3 思路公式输入 示范： $f(x) = x$ $\lbrace \sum_{i=0}^{n}i^{2}=\frac{2a}{x^2+1} \rbrace$ $\frac ab$ $\frac{1}{2}$ ${a+1 \over b+1}$ $\sqrt[x+1]{x^2}$ $\int_{1}^{\infty}$ $\prod_{1}^{n}$ $\bigcup_{1}^{n}$ $\iint_{1}^{n}$ $\sum_i^n$ $\lbrace a+x \rbrace$ $\lceil \frac{x}{2} \rceil$ $\lfloor x \rfloor$ $O(log^n_2)$ $x^2$ $x_i$ 示例代码 在代码段前加上四个空格或者一个TAB 符即可把该行变成代码行，可以全选所有的代码一起按tab即可全部变成代码。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748#include &lt;cstdio&gt; #include &lt;cstring&gt; #define lowbit(x) (x&amp;(-x)) using namespace std; int n,m,k,l,r,d,x,ans; long long sum[100005],damage[100005],h; void update(int i,int v) &#123; while(i&lt;=n) &#123; damage[i]+=v; i+=lowbit(i); &#125; &#125; long long getSum(int i) &#123; long long all=0; while(i&gt;0) &#123; all+=damage[i]; i-=lowbit(i); &#125; return all; &#125; int main() &#123; while(scanf("%d",&amp;n),n!=0) &#123; scanf("%d",&amp;m); memset(damage,0,sizeof(damage)); while(m--&gt;0) &#123; scanf("%d%d%d",&amp;l,&amp;r,&amp;d); update(l,d); update(r+1,-d); &#125; sum[n+1]=0; for(int i=n;i&gt;0;--i) sum[i]=sum[i+1]+getSum(i); scanf("%d",&amp;k); ans=0; while(k--&gt;0) &#123; scanf("%I64d%d",&amp;h,&amp;x); if(h&gt;sum[x]) ++ans; &#125; printf("%d\n",ans); &#125; return 0; &#125; TAG A B C D 备注题目来源]]></content>
@@ -9,18 +20,6 @@
       </categories>
       <tags>
         <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[标签测试]]></title>
-    <url>%2F2018%2F11%2F30%2F%E4%BD%A0%E5%A5%BD%E5%91%80%2F</url>
-    <content type="text"><![CDATA[#啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿 ##啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊 ###啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊阿啊啊啊啊 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊阿啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊]]></content>
-      <categories>
-        <category>测试</category>
-      </categories>
-      <tags>
-        <tag>字符串</tag>
-        <tag>数据结构</tag>
       </tags>
   </entry>
 </search>
